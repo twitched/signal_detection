@@ -1,11 +1,11 @@
 library(ROCR)
 n <- 1000
-threshold <- 12
+threshold <- 10
 A.stdev = 1
 A.mean = 10
-B.offset = 4
+B.offset = 2
 B.mean = 10 + B.offset
-B.stdev = 2
+B.stdev = 1
 A <- rnorm(n, A.mean, A.stdev)
 B <- rnorm(n, B.mean, B.stdev)
 xlims <- range(A.mean - A.stdev * 4, B.mean + B.stdev * 4)
@@ -51,9 +51,9 @@ polygon(c(rev(A.density$x[which(A.density$x > intersX & A.density$x < threshold)
         c(rev(A.density$y[which(A.density$x > intersX & A.density$x < threshold)]), B.density$y[which(B.density$x > intersX & B.density$x < threshold)]),
         col = cols[["False Negative"]])
 #false positive
-polygon(c(A.density$x[which(A.density$x > threshold & B.density$x < intersX)], rev(B.density$x[which(B.density$x < intersX & B.density$x > threshold)])),
-        c(A.density$y[which(A.density$x > threshold & B.density$x < intersX)], rev(B.density$y[which(B.density$x < intersX & B.density$x > threshold)])),
-        col = cols[["False Postiive"]])
+polygon(c(A.density$x[which(A.density$x > threshold & B.density$x <= intersX)], rev(B.density$x[which(B.density$x <= intersX & B.density$x > threshold)])),
+        c(A.density$y[which(A.density$x > threshold & B.density$x <= intersX)], rev(B.density$y[which(B.density$x <= intersX & B.density$x > threshold)])),
+        col = cols[["False Positive"]])
 #overlapPos
 polygon(c(B.density$x[which(B.density$x > threshold & B.density$x < intersX)], A.density$x[which(A.density$x > left)], threshold), 
         c(B.density$y[which(B.density$x > threshold & B.density$x < intersX)], A.density$y[which(A.density$x > left)], 0), 
